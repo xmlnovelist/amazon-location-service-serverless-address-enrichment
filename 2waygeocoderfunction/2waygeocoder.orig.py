@@ -26,9 +26,7 @@ def lambda_handler(event, context):
     if status == 200:
         print(f"Successful S3 get_object response. Status - {status}")
         data = pd.read_csv(response.get("Body")).dropna(thresh=2)
-        #rename specific column names in gun violence archive data set
-        data.rename(columns = {'Incident ID':'IncidentID', 'Incident Date':'IncidentDate', 'City Or County':'CityOrCounty', '# Killed':'Killed', '# Injured':'Injured'}, inplace = True)
-        #data = data.rename(columns=str.title)
+        data = data.rename(columns=str.title)
         columns = data.columns
         Countries = []
         Points = []
@@ -127,9 +125,8 @@ def lambda_handler(event, context):
             data["CountryCode"] = Countries
         #########################################################
         #     Geocoder  (for different possible column labels)  #
-        #     Test "City Or County" for Gun Violence Archive    #  
         #########################################################
-        elif "Address" and "CityOrCounty" in columns:
+        elif "Address" in columns:
             for index, row in data.iterrows():
                  try:
                     json_response = ""
@@ -141,7 +138,7 @@ def lambda_handler(event, context):
                     else:
                         response = location.search_place_index_for_text(
                             IndexName=location_index,
-                            Text= str(row.Address) +  "," + str(row.CityOrCounty) + "," + str(row.State))
+                            Text= str(row.Address) + str(row.City) + "," + str(row.State) + "," + str(row.Zip))
                     json_response = response["Results"]
                     print(json_response)
                  except:

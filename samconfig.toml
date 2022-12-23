@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "sdoh-geo-enrich-rubinofw"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-7ug69128unwe"
+s3_prefix = "sdoh-geo-enrich-rubinofw"
+region = "us-east-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "LocationIndexName=\"sdoh-location-index-cha-rubinofw\" InputBucketName=\"sdoh-input-geo-rubinofw\" RawBucketName=\"sdoh-raw-geo-rubinofw\" ProcessedBucketName=\"sdoh-proc-geo-rubinofw\" DestinationBucketName=\"sdoh-dest-geo-rubinofw\""
+image_repositories = []
